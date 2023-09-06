@@ -1,0 +1,25 @@
+$color_1: #1a1a1a;
+
+header {
+  margin-top: 80px;
+}
+.header {
+  background: #e6e6e6;
+  color: $color_1;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  cursor: default;
+  padding: 1rem 0;
+}
+@media (min-width: 1000px) {
+  .header {
+    top: 145px;
+  }
+}
+@media screen and (max-width: 1000px) and (min-width: 666px) {
+  .header {
+    top: 145px;
+  }
+}
