@@ -12,6 +12,17 @@ function loaderPage() {
   const shoppingList = document.querySelector(".shopping-list");
   const li = document.querySelectorAll(".li");
 
+  const dltClick = (item) => {
+    const currentItems = getSavedItems();
+    const itemIndex = currentItems.indexOf(item);
+    if (itemIndex > -1) {
+      shoppingList.innerHTML = "";
+      currentItems.splice(itemIndex, 1);
+      saveItems(currentItems);
+      renderList();
+    }
+  };
+
   const renderList = () => {
     const savedItems = getSavedItems();
     const savedItemFunction = (item) => {
@@ -28,10 +39,17 @@ function loaderPage() {
       shoppingList.appendChild(newListItem);
       newListItem.addEventListener("click", () => dltClick(item));
     };
+
     if (savedItems == "") {
       savedItemFunction("task1");
       savedItemFunction("task2");
       savedItemFunction("task3");
+      const liList = document.querySelectorAll(".shopLi");
+      liList.forEach((li) => {
+        li.addEventListener("click", function () {
+          this.style.display = "none";
+        });
+      });
     } else {
       savedItems.forEach(savedItemFunction);
     }
@@ -52,18 +70,6 @@ function loaderPage() {
     }
   };
 
-  const dltClick = (item) => {
-    const currentItems = getSavedItems();
-    const itemIndex = currentItems.indexOf(item);
-    if (itemIndex > -1) {
-      shoppingList.innerHTML = "";
-      currentItems.splice(itemIndex, 1);
-      saveItems(currentItems);
-      renderList();
-    }
-  };
-  
-  
   const keyUp = (event) => {
     if (event.key === "Enter") {
       inputBtn.click();
