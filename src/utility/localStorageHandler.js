@@ -1,18 +1,12 @@
-
 const savedItemsKey = "shoppingListItems";
 
 export function getSavedItems() {
-  return JSON.parse(localStorage.getItem(savedItemsKey)) || [];
+  return Object.values(localStorage) || [];
 }
 
-export function saveItems(items) {
-  localStorage.setItem("shoppingListItems", JSON.stringify(items));
+export function saveItem(key, text) {
+  localStorage.setItem(key, text);
 }
-
-export function saveItem(item) {
-  const savedItems = getSavedItems();
-  savedItems.push(item);
-  localStorage.setItem(savedItemsKey, JSON.stringify(savedItems));
+export function removeItem(key) {
+  localStorage.removeItem(key);
 }
-
-

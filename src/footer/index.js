@@ -3,7 +3,7 @@ import "./index.scss";
 import {
   getSavedItems,
   saveItem,
-  saveItems,
+  removeItem
 } from "../utility/localStorageHandler";
 
 function loaderPage() {
@@ -12,44 +12,32 @@ function loaderPage() {
   const shoppingList = document.querySelector(".shopping-list");
   const li = document.querySelectorAll(".li");
 
-  const dltClick = (item) => {
-    const currentItems = getSavedItems();
-    const itemIndex = currentItems.indexOf(item);
-    if (itemIndex > -1) {
-      shoppingList.innerHTML = "";
-      currentItems.splice(itemIndex, 1);
-      saveItems(currentItems);
-      renderList();
-    }
+  const dltClick = (text,newListItem) => {
+    newListItem.remove();
+    removeItem(text);
   };
 
   const renderList = () => {
     const savedItems = getSavedItems();
-    const savedItemFunction = (item) => {
+    const savedItemFunction = (text) => {
       const newListItem = document.createElement("li");
       newListItem.className = "shopLi";
       const newLi = `
           <span>
             <span class="Square"></span>
-            <span class="text">${item}</span>
+            <span class="item">${text}</span>
           </span>
           <span class="tik"></span>
         `;
       newListItem.innerHTML = newLi;
       shoppingList.appendChild(newListItem);
-      newListItem.addEventListener("click", () => dltClick(item));
+      newListItem.addEventListener("click", () => dltClick(text,newListItem));
     };
 
     if (savedItems == "") {
       savedItemFunction("task1");
       savedItemFunction("task2");
       savedItemFunction("task3");
-      const liList = document.querySelectorAll(".shopLi");
-      liList.forEach((li) => {
-        li.addEventListener("click", function () {
-          this.style.display = "none";
-        });
-      });
     } else {
       savedItems.forEach(savedItemFunction);
     }
@@ -64,7 +52,7 @@ function loaderPage() {
       userInput.value = "";
       alert("please fill the box");
     } else {
-      saveItem(inputUserValue);
+      saveItem(inputUserValue,inputUserValue);
       renderList();
       userInput.value = "";
     }
